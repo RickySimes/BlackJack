@@ -7,9 +7,14 @@ public class Dealer {
 
     public Dealer(CardDeck cardDeck){
         this.hand = new Hand();
+        this.cardDeck = cardDeck;
 
     }
     public void dealCards(Hand hand){
+        hand.addCard(cardDeck.dealCard());
+        hand.addCard(cardDeck.dealCard());
+    }
+    public void hitCard(Hand hand){
         hand.addCard(cardDeck.dealCard());
     }
 

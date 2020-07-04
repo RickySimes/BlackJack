@@ -71,16 +71,16 @@ public class Card {
 
     public String getSuitAsString() {
         if(suit == 0) {
-            return "♠";
+            return "Spades";
         }
         else if(suit == 1) {
-            return "♥";
+            return "Hearts";
         }
         else if(suit == 2) {
-            return "♦";
+            return "Diamonds";
         }
         else if(suit == 3) {
-            return "♣";
+            return "Clubs";
         }
         else {
             return "";

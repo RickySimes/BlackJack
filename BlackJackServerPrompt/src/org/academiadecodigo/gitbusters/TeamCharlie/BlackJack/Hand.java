@@ -9,7 +9,7 @@ public class Hand {
     private ArrayList<Card> hand;
 
     public Hand() {
-        hand = new ArrayList<Card>();
+        hand = new ArrayList<>();
     }
 
     public void addCard(Card c) {
@@ -28,14 +28,21 @@ public class Hand {
         return hand.size();
     }
 
-    public void getHand(){
+    public String getHand(){
+        StringBuilder stringBuilder = new StringBuilder();
+
         for (Card card : hand){
-            System.out.println(card);
+            stringBuilder.append(card);
         }
+        return stringBuilder.toString();
     }
 
     public void clear() {
         hand.clear();
     }
 
+    @Override
+    public String toString() {
+        return getHand();
+    }
 }

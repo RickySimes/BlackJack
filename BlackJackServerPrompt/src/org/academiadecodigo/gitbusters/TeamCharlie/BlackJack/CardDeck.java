@@ -7,8 +7,7 @@ public class CardDeck {
 ///MAIN ESTÀ AQUI SÒ PARA TESTE
     public static void main(String[] args) {
         CardDeck cardDeck = new CardDeck();
-       cardDeck.shuffle();
-
+        cardDeck.shuffle();
         for(Card card: cardDeck.getDeck()){
             System.out.println(card);
             //System.out.println("value: " + card.getValue());
@@ -29,6 +28,7 @@ public class CardDeck {
                 deck[cardCount] = new Card(value,suit);
                 cardCount++;
             }
+            this.shuffle();
         }
     }
 

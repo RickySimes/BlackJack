@@ -133,6 +133,7 @@ public class ChatServer {
         private String name;
         final private Socket clientSocket;
         private Prompt prompt;
+        private PrintStream printStream;
        /* final private BufferedReader in;
         final private BufferedWriter out;*/
 
@@ -149,7 +150,8 @@ public class ChatServer {
             /*in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
             */
-            this.prompt = new Prompt(clientSocket.getInputStream(), new PrintStream(clientSocket.getOutputStream()));
+            this.printStream = new PrintStream(clientSocket.getOutputStream());
+            this.prompt = new Prompt(clientSocket.getInputStream(),printStream);
 
         }
 
@@ -177,9 +179,10 @@ public class ChatServer {
                     StringInputScanner playerName = new StringInputScanner();
                     playerName.setMessage("Insert your Name" + "\n");
                     name = prompt.getUserInput(playerName);
-
-                    game.addPlayer(new Player(name));
-                    game.start(prompt);
+                    Player player = new Player(name,clientSocket);
+                    game.addPlayer(player);
+                    printStream.println("Welcome "+ name + "!");
+                    game.start(prompt,player,printStream);
 
                 }else if (menuOption == 2){
                     try {
