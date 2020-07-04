@@ -1,7 +1,9 @@
 package org.academiadecodigo.gitbusters.TeamCharlie.Server;
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
+import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Game;
+import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Player;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -70,6 +72,7 @@ public class ChatServer {
                     thread.setName(name);
                     thread.start();
 
+
                 } catch (IOException ex) {
                     System.out.println("Error receiving client connection: " + ex.getMessage());
                 }
@@ -127,7 +130,7 @@ public class ChatServer {
     private class ServerWorker implements Runnable {
 
         // Immutable state, no need to lock
-        final private String name;
+        private String name;
         final private Socket clientSocket;
         private Prompt prompt;
        /* final private BufferedReader in;
@@ -165,12 +168,19 @@ public class ChatServer {
 
             //while (!clientSocket.isClosed()) {
 
-                IntegerInputScanner scanner = new IntegerInputScanner();
-                scanner.setMessage("1 - Play " + "\n" + "2 - Exit" + "\n");
-                int menuOption =prompt.getUserInput(scanner);
+
+            IntegerInputScanner scanner = new IntegerInputScanner();
+            scanner.setMessage("1 - Play " + "\n" + "2 - Exit" + "\n");
+            int menuOption =prompt.getUserInput(scanner);
 
                 if (menuOption == 1){
-                    game.start();
+                    StringInputScanner playerName = new StringInputScanner();
+                    playerName.setMessage("Insert your Name" + "\n");
+                    name = prompt.getUserInput(playerName);
+
+                    game.addPlayer(new Player(name));
+                    game.start(prompt);
+
                 }else if (menuOption == 2){
                     try {
                         clientSocket.close();

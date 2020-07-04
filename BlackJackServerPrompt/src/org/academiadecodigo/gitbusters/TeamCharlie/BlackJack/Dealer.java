@@ -9,6 +9,9 @@ public class Dealer {
         this.hand = new Hand();
 
     }
+    public void dealCards(Hand hand){
+        hand.addCard(cardDeck.dealCard());
+    }
 
     public void setBusting(boolean busting) {
         this.busting = busting;

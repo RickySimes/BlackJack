@@ -8,9 +8,6 @@ public class Player {
     Hand hand;
     String name;
 
-
-
-
     public Player(String name){
         //this.hand = hand;
         this.name = name;

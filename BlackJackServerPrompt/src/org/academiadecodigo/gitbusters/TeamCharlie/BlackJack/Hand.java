@@ -28,6 +28,12 @@ public class Hand {
         return hand.size();
     }
 
+    public void getHand(){
+        for (Card card : hand){
+            System.out.println(card);
+        }
+    }
+
     public void clear() {
         hand.clear();
     }
