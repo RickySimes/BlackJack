@@ -11,8 +11,8 @@ public class Player {
 
 
 
-    public Player(Hand hand, String name){
-        this.hand = hand;
+    public Player(String name){
+        //this.hand = hand;
         this.name = name;
     }
 

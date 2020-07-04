@@ -1,11 +1,16 @@
 package org.academiadecodigo.gitbusters.TeamCharlie.Server;
 
+import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Card;
+import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.CardDeck;
+import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Dealer;
+import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Game;
+
 public class Main {
     public static void main(String[] args) {
 
         int port = ChatServer.DEFAULT_PORT;
-
-        ChatServer chatServer = new ChatServer();
+        Game game = new Game(new Dealer(new CardDeck()));
+        ChatServer chatServer = new ChatServer(game);
         chatServer.start(port);
 
 

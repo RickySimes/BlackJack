@@ -1,12 +1,13 @@
 package org.academiadecodigo.gitbusters.TeamCharlie.BlackJack;
 
 public class Dealer {
-
+    private CardDeck cardDeck;
     private boolean busting;
-    Hand hand;
+    private Hand hand;
 
-    public Dealer(Hand hand){
-        this.hand = hand;
+    public Dealer(CardDeck cardDeck){
+        this.hand = new Hand();
+
     }
 
     public void setBusting(boolean busting) {

@@ -1,4 +1,8 @@
 package org.academiadecodigo.gitbusters.TeamCharlie.Server;
+import org.academiadecodigo.bootcamp.Prompt;
+import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
+import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Game;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,7 +27,10 @@ public class ChatServer {
      * Synchronized List of worker threads, locked by itself
      */
     private List<ServerWorker> workers = Collections.synchronizedList(new ArrayList<ServerWorker>());
-
+    private Game game;
+    public ChatServer(Game game){
+        this.game = game;
+    }
 
     /**
      * Starts the chat server on a specified port
@@ -48,6 +55,7 @@ public class ChatServer {
                 // Block waiting for client connections
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Client accepted: " + clientSocket);
+
 
                 try {
 
@@ -121,8 +129,9 @@ public class ChatServer {
         // Immutable state, no need to lock
         final private String name;
         final private Socket clientSocket;
-        final private BufferedReader in;
-        final private BufferedWriter out;
+        private Prompt prompt;
+       /* final private BufferedReader in;
+        final private BufferedWriter out;*/
 
         /**
          * @param name         the name of the thread handling this client connection
@@ -134,8 +143,10 @@ public class ChatServer {
             this.name = name;
             this.clientSocket = clientSocket;
 
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            /*in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+            */
+            this.prompt = new Prompt(clientSocket.getInputStream(), new PrintStream(clientSocket.getOutputStream()));
 
         }
 
@@ -151,46 +162,55 @@ public class ChatServer {
 
             System.out.println("Thread " + name + " started");
 
-            try {
 
+            //while (!clientSocket.isClosed()) {
 
-                while (!clientSocket.isClosed()) {
+                IntegerInputScanner scanner = new IntegerInputScanner();
+                scanner.setMessage("1 - Play " + "\n" + "2 - Exit" + "\n");
+                int menuOption =prompt.getUserInput(scanner);
 
-                    // Blocks waiting for client messages
-                    String line = in.readLine();
-                    //CLIENT  AND NAME MESSAGE SOUT ///////
-                    System.out.println(name);
-                    System.out.println(line);
-                    ///////////////////////////////////////
-                    if (line == null) {
-
-                        System.out.println("Client " + name + " closed, exiting...");
-
-                        in.close();
+                if (menuOption == 1){
+                    game.start();
+                }else if (menuOption == 2){
+                    try {
                         clientSocket.close();
-                        continue;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                // Blocks waiting for client messages
 
-                    } else if (!line.isEmpty()) {
 
-                        if (line.toUpperCase().equals(LIST_CMD)) {
+               /* String line = in.readLine();
+                //CLIENT  AND NAME MESSAGE SOUT ///////
+                System.out.println(name);
+                System.out.println(line);
+                ///////////////////////////////////////
+                if (line == null) {
 
-                            send("Clients Connected", listClients());
+                    System.out.println("Client " + name + " closed, exiting...");
 
-                        } else {
+                    in.close();
+                    clientSocket.close();
+                    continue;
 
-                            // Broadcast message to all other clients
-                            sendAll(name, line);
-                        }
+                } else if (!line.isEmpty()) {
 
+                    if (line.toUpperCase().equals(LIST_CMD)) {
+
+                        send("Clients Connected", listClients());
+
+                    } else {
+
+                        // Broadcast message to all other clients
+                        sendAll(name, line);
                     }
 
-                }
+                }*/
 
-                workers.remove(this);
+            //}
 
-            } catch (IOException ex) {
-                System.out.println("Receiving error on " + name + " : " + ex.getMessage());
-            }
+            workers.remove(this);
 
         }
 
@@ -202,15 +222,15 @@ public class ChatServer {
          */
         private void send(String origClient, String message) {
 
-            try {
+            /*try {
 
-                out.write(origClient + ": " + message);
+                /*out.write(origClient + ": " + message);
                 out.newLine();
                 out.flush();
 
             } catch (IOException ex) {
                 System.out.println("Error sending message to Client " + name + " : " + ex.getMessage());
-            }
+            }*/
         }
 
     }
