@@ -28,7 +28,7 @@ public class CardDeck {
                 deck[cardCount] = new Card(value,suit);
                 cardCount++;
             }
-            this.shuffle();
+            
         }
     }
 
