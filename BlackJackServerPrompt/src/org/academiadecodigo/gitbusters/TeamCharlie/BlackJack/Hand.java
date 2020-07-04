@@ -16,22 +16,23 @@ public class Hand {
         hand.add(c);
     }
 
-    public void removeCard(Card c) {
-        hand.remove(c);
+
+    public int getHandPoints() {
+
+        int result = 0;
+
+        for (Card cards : hand) {
+
+            result += cards.getPoints();
+        }
+
+        return result;
     }
 
-    public Card getCard(int position) {
-        return (Card)hand.get(position);
-    }
-
-    public int getCardCount() {
-        return hand.size();
-    }
-
-    public String getHand(){
+    public String getHand() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (Card card : hand){
+        for (Card card : hand) {
             stringBuilder.append(card);
         }
         return stringBuilder.toString();

@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Multi-threaded tcp chat server that responds to client commands
  */
+
 public class ChatServer {
 
     /**
@@ -123,7 +124,6 @@ public class ChatServer {
 
     }
 
-
     /**
      * Handles client connections
      */
@@ -181,7 +181,7 @@ public class ChatServer {
                     name = prompt.getUserInput(playerName);
                     Player player = new Player(name,clientSocket);
                     game.addPlayer(player);
-                    printStream.println("Welcome "+ name + "!");
+                    printStream.println("Welcome "+ name + " Good luck!");
                     game.start(prompt,player,printStream);
 
                 }else if (menuOption == 2){

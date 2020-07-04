@@ -7,19 +7,26 @@ public class Card {
 
     private int points;
 
+
     public Card(CardValue cardValue, Suit cardSuit) {
         this.cardValue = cardValue;
         this.cardSuit = cardSuit;
-
-    }
-
-    public int getPoints(CardValue cardValue) {
         points = cardValue.getCardValue();
-        return points;
+
     }
+
+    public CardValue getCardValue() {
+        return cardValue;
+    }
+
+    public int getPoints() {
+        return points;
+
+    }
+
 
     @Override
     public String toString() {
-        return "[ " + cardValue +  cardSuit + " ]";
+        return "[ " + cardValue + " " + cardSuit + " ]";
     }
 }

@@ -11,7 +11,11 @@ public class Test {
         //System.out.println(Arrays.toString(cv));
 
       CardDeck cd = new CardDeck();
-
+        System.out.println(cd.dealCard());
+        System.out.println(cd.getNumberOfCards());
+        for (Card card: cd.getCards()) {
+            System.out.println(card);
+        }
 
 
 
