@@ -2,6 +2,7 @@ package org.academiadecodigo.gitbusters.TeamCharlie.Server;
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
+import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Dealer;
 import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Game;
 import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Player;
 
@@ -31,6 +32,7 @@ public class ChatServer {
      */
     private List<ServerWorker> workers = Collections.synchronizedList(new ArrayList<ServerWorker>());
     private Game game;
+
     public ChatServer(Game game){
         this.game = game;
     }
@@ -176,13 +178,16 @@ public class ChatServer {
             int menuOption =prompt.getUserInput(scanner);
 
                 if (menuOption == 1){
+
                     StringInputScanner playerName = new StringInputScanner();
                     playerName.setMessage("Insert your Name" + "\n");
                     name = prompt.getUserInput(playerName);
+
                     Player player = new Player(name,clientSocket);
                     game.addPlayer(player);
-                    printStream.println("Welcome "+ name + " Good luck!");
+                    printStream.println("\n Welcome "+ name + "! Good luck! \n");
                     game.start(prompt,player,printStream);
+
 
                 }else if (menuOption == 2){
                     try {

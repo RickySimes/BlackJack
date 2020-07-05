@@ -11,12 +11,16 @@ public class Player {
     private Hand hand;
     private String name;
     private Socket clientSocket;
+    private boolean stay;
 
     public Player(String name,Socket clientSocket){
-        //this.hand = hand;
         this.name = name;
         this.clientSocket = clientSocket;
         hand = new Hand();
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 
     public void setBusting(boolean busting) {
@@ -33,6 +37,14 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isStay() {
+        return stay;
+    }
+
+    public void setStay(boolean stay) {
+        this.stay = stay;
     }
 
     public void closeClientSocket() throws IOException {

@@ -5,7 +5,7 @@ import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.lang.ref.PhantomReference;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Game {
@@ -13,35 +13,57 @@ public class Game {
     private ArrayList<Player> players;
 
 
-    public Game(Dealer dealer){
+    public Game(Dealer dealer) {
         this.dealer = dealer;
         players = new ArrayList<>();
+
     }
 
 
-    public void start(Prompt prompt, Player player1, PrintStream printStream){
-        for (Player player : players){
+    public void start(Prompt prompt, Player player1, PrintStream printStream) {
+
+
+        for (Player player : players) {
+
+            if (player.getHand().getStartHand().size() == 2) {
+                continue;
+            }
+
             dealer.dealCards(player.getHand());
+
+            printStream.println(player1.getHand());
         }
-        while (true){
-            String[] menuOptions = {"View Hand", "View Dealer's Hand" , "Hit", "Stay." ,"Quit Game"};
+
+
+        while (!player1.isStay()) {
+
+
+            String[] menuOptions = {"Hit", "Stay.", "View all players hands", "Quit Game"};
             MenuInputScanner menuInputScanner = new MenuInputScanner(menuOptions);
             menuInputScanner.setMessage("Choose what you wanna do.");
             int menuOption = prompt.getUserInput(menuInputScanner);
-            switch (menuOption){
-                case 1:
-                    printStream.println(player1.getHand());
-                    break;
-                case 2:
 
-                    break;
-                case 3:
+            switch (menuOption) {
+                case 1:
                     dealer.hitCard(player1.getHand());
                     printStream.println(player1.getHand());
                     break;
-                case 4:
+
+                case 2:
+                    player1.setStay(true);
                     break;
-                case 5:
+
+                case 3:
+                    for (Player players : players) {
+                        if (players == player1) {
+                            continue;
+                        }
+                        printStream.println(players.getName() + " ---> " + players.getHand() + "\n");
+                    }
+                    break;
+                    
+                case 4:
+                    players.remove(player1);
                     try {
                         player1.closeClientSocket();
                     } catch (IOException e) {
@@ -52,10 +74,9 @@ public class Game {
             }
         }
 
-
-
     }
-    public void addPlayer(Player player){
-            players.add(player);
+
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 }

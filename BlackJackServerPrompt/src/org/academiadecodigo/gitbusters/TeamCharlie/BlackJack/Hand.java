@@ -2,6 +2,7 @@ package org.academiadecodigo.gitbusters.TeamCharlie.BlackJack;
 
 import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Card;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Hand {
@@ -28,6 +29,10 @@ public class Hand {
 
         return result;
     }
+    public ArrayList<Card> getStartHand(){
+        return hand;
+    }
+
 
     public String getHand() {
         StringBuilder stringBuilder = new StringBuilder();
