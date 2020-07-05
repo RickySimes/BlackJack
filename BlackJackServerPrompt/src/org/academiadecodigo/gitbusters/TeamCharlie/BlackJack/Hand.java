@@ -1,8 +1,5 @@
 package org.academiadecodigo.gitbusters.TeamCharlie.BlackJack;
 
-import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Card;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Hand {
@@ -25,7 +22,7 @@ public class Hand {
         //}
     }
 
-    public int getBlackjackValue() {
+    public int getAceValue() {
         int numCards = hand.size();
         int val = 0;
 
@@ -37,12 +34,12 @@ public class Hand {
                 haveAce = true;
                 aceMsg = "Ace is 1";
             }
-            val = val + cardVal;
+            val  += cardVal;
 
         }
 
         if(haveAce && (val + 10 <= 21)) {
-            val = val + 10;
+            val += 10;
             aceMsg = "Ace is 11";
         }
 
@@ -85,6 +82,6 @@ public class Hand {
     @Override
     public String toString() {
         //Add Total Points
-        return getHand() + "   Total :" + getBlackjackValue() + " |" + aceMsg;
+        return getHand() + "   Total :" + getHandPoints() + "\n";
     }
 }

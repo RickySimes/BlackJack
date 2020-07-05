@@ -1,7 +1,9 @@
 package org.academiadecodigo.gitbusters.TeamCharlie.Server;
+
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
+import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.AsciiMessage;
 import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Dealer;
 import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Game;
 import org.academiadecodigo.gitbusters.TeamCharlie.BlackJack.Player;
@@ -33,7 +35,7 @@ public class ChatServer {
     private List<ServerWorker> workers = Collections.synchronizedList(new ArrayList<ServerWorker>());
     private Game game;
 
-    public ChatServer(Game game){
+    public ChatServer(Game game) {
         this.game = game;
     }
 
@@ -153,7 +155,7 @@ public class ChatServer {
             out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
             */
             this.printStream = new PrintStream(clientSocket.getOutputStream());
-            this.prompt = new Prompt(clientSocket.getInputStream(),printStream);
+            this.prompt = new Prompt(clientSocket.getInputStream(), printStream);
 
         }
 
@@ -175,72 +177,39 @@ public class ChatServer {
 
             IntegerInputScanner scanner = new IntegerInputScanner();
             scanner.setMessage("1 - Play " + "\n" + "2 - Exit" + "\n");
-            int menuOption =prompt.getUserInput(scanner);
+            int menuOption = prompt.getUserInput(scanner);
 
-                if (menuOption == 1){
+            if (menuOption == 1) {
 
-                    StringInputScanner playerName = new StringInputScanner();
-                    playerName.setMessage("Insert your Name" + "\n");
-                    name = prompt.getUserInput(playerName);
+                StringInputScanner playerName = new StringInputScanner();
+                playerName.setMessage("Insert your Name" + "\n");
+                name = prompt.getUserInput(playerName);
 
-                    Player player = new Player(name,clientSocket);
+                Player player = new Player(name, clientSocket);
 
-                        if (game.isRunning()){
-                            while (game.isRunning()){
-                                try {
-                                    printStream.println("A GAME IS CURRENTLY RUNNING , PLEASE WAIT FOR THE GAME TO END" + "\n");
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+
+                if (game.isRunning()) {
+                    while (game.isRunning()) {
+                        game.checkPlayers();
+                        printStream.println("A GAME IS CURRENTLY RUNNING , PLEASE WAIT FOR THE GAME TO END" + "\n");
                     }
-
-
-                    game.addPlayer(player);
-                    //Ascii Hand + Welcome
-                    printStream.println("\n Welcome "+ name + "! Good luck! \n" + "\n               __             \n         _..-\'\'--\'----_.      \n       ,\'\'.-\'\'| .---/ _`-._   \n     ,\' \\ \\  ;| | ,/ / `-._`-.\n   ,\' ,\',\\ \\( | |// /,-._  / /\n   ;.`. `,\\ \\`| |/ / |   )/ / \n  / /`_`.\\_\\ \\| /_.-.\'-\'\'/ /  \n / /_|_:.`. \\ |;\'`..\')  / /   \n `-._`-._`.`.;`.\\  ,\'  / /    \n     `-._`.`/    ,\'-._/ /     \n       : `-/     \\`-.._/      \n       |  :      ;._ (        \n       :  |      \\  ` \\       \n        \\         \\   |       \n         :        :   ;       \n         |           /        \n         ;         ,\'         \n        /         /           \n       /         /            \n                /             \n");
-                    game.start(prompt,player,printStream);
-
-
-                }else if (menuOption == 2){
-                    try {
-                        clientSocket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    printStream.println("The game has restarted and now you can play!");
                 }
-                // Blocks waiting for client messages
 
 
-               /* String line = in.readLine();
-                //CLIENT  AND NAME MESSAGE SOUT ///////
-                System.out.println(name);
-                System.out.println(line);
-                ///////////////////////////////////////
-                if (line == null) {
+                game.addPlayer(player);
+                //Ascii Hand + Welcome
+                printStream.println("\n Welcome " + name + "! Good luck!" + AsciiMessage.WELCOME_MESSAGE);
+                game.start(prompt, player, printStream);
 
-                    System.out.println("Client " + name + " closed, exiting...");
 
-                    in.close();
+            } else if (menuOption == 2) {
+                try {
                     clientSocket.close();
-                    continue;
-
-                } else if (!line.isEmpty()) {
-
-                    if (line.toUpperCase().equals(LIST_CMD)) {
-
-                        send("Clients Connected", listClients());
-
-                    } else {
-
-                        // Broadcast message to all other clients
-                        sendAll(name, line);
-                    }
-
-                }*/
-
-            //}
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
             workers.remove(this);
 
