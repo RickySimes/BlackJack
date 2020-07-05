@@ -185,7 +185,8 @@ public class ChatServer {
 
                     Player player = new Player(name,clientSocket);
                     game.addPlayer(player);
-                    printStream.println("\n Welcome "+ name + "! Good luck! \n");
+                    //Ascii Hand + Welcome
+                    printStream.println("\n Welcome "+ name + "! Good luck! \n" + "\n               __             \n         _..-\'\'--\'----_.      \n       ,\'\'.-\'\'| .---/ _`-._   \n     ,\' \\ \\  ;| | ,/ / `-._`-.\n   ,\' ,\',\\ \\( | |// /,-._  / /\n   ;.`. `,\\ \\`| |/ / |   )/ / \n  / /`_`.\\_\\ \\| /_.-.\'-\'\'/ /  \n / /_|_:.`. \\ |;\'`..\')  / /   \n `-._`-._`.`.;`.\\  ,\'  / /    \n     `-._`.`/    ,\'-._/ /     \n       : `-/     \\`-.._/      \n       |  :      ;._ (        \n       :  |      \\  ` \\       \n        \\         \\   |       \n         :        :   ;       \n         |           /        \n         ;         ,\'         \n        /         /           \n       /         /            \n                /             \n");
                     game.start(prompt,player,printStream);
 
 

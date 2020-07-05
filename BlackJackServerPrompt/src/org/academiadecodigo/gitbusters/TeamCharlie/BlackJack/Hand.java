@@ -49,6 +49,7 @@ public class Hand {
 
     @Override
     public String toString() {
-        return getHand();
+        //Add Total Points
+        return getHand() + "   Total :" + getHandPoints();
     }
 }

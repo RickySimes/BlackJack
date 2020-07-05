@@ -25,7 +25,7 @@ public class Game {
 
         for (Player player : players) {
 
-            if (player.getHand().getStartHand().size() == 2) {
+            if (player.getHand().getStartHand().size() >= 2) {
                 continue;
             }
 
@@ -46,6 +46,8 @@ public class Game {
             switch (menuOption) {
                 case 1:
                     dealer.hitCard(player1.getHand());
+                    //Ascii Hand
+                    printStream.println("\n               __             \n         _..-\'\'--\'----_.      \n       ,\'\'.-\'\'| .---/ _`-._   \n     ,\' \\ \\  ;| | ,/ / `-._`-.\n   ,\' ,\',\\ \\( | |// /,-._  / /\n   ;.`. `,\\ \\`| |/ / |   )/ / \n  / /`_`.\\_\\ \\| /_.-.\'-\'\'/ /  \n / /_|_:.`. \\ |;\'`..\')  / /   \n `-._`-._`.`.;`.\\  ,\'  / /    \n     `-._`.`/    ,\'-._/ /     \n       : `-/     \\`-.._/      \n       |  :      ;._ (        \n       :  |      \\  ` \\       \n        \\         \\   |       \n         :        :   ;       \n         |           /        \n         ;         ,\'         \n        /         /           \n       /         /            \n                /             \n");
                     printStream.println(player1.getHand());
                     break;
 
@@ -54,8 +56,12 @@ public class Game {
                     break;
 
                 case 3:
+                    //Show dealer Hand
+                    printStream.println("DEALER ---> " + dealer.getHand() + "\n");
                     for (Player players : players) {
                         if (players == player1) {
+                            //Show my Hand
+                            printStream.println("My Hand ---> " + players.getHand() + "\n");
                             continue;
                         }
                         printStream.println(players.getName() + " ---> " + players.getHand() + "\n");
