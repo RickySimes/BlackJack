@@ -165,7 +165,7 @@ public class Game {
                 if (player.getBusting()) {
                     continue;
                 }
-                printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "Dealer Busted, YOU WIN! \n");
+                printStream.println(AsciiMessage.YOU_WIN + "Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand());
             }
 
         } else if (dealer.getHand().getHandPoints() < player1.getHand().getHandPoints() && !player1.getBusting()) {
