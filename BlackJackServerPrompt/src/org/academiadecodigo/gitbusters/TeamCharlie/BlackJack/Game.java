@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Game {
     private Dealer dealer;
     private ArrayList<Player> players;
+    private boolean isRunning;
 
 
     public Game(Dealer dealer) {
@@ -31,17 +32,33 @@ public class Game {
 
             dealer.dealCards(player.getHand());
 
+
             printStream.println(player1.getHand());
         }
+        isRunning = true;
 
+        while (!player1.isStay() || !player1.getBusting()) {
 
-        while (!player1.isStay()) {
-
-
-            String[] menuOptions = {"Hit", "Stay.", "View all players hands", "Quit Game"};
+            if (player1.getHand().getHandPoints() > 21){
+                player1.setBusting(true);
+                printStream.println("explosão em ascii");
+                break;
+            }
+            if (player1.getHand().getHandPoints() == 21 && player1.getHand().getStartHand().size() == 2){
+                printStream.println("YOU GOT BLACK JACK");
+                player1.setStay(true);
+                break;
+            }
+            if (player1.getHand().getHandPoints() == 21){
+                printStream.println("YOU GOT MAX POINTS");
+                player1.setStay(true);
+                break;
+            }
+            String[] menuOptions = {"Hit.", "Stay.", "View all players hands.", "Quit Game."};
             MenuInputScanner menuInputScanner = new MenuInputScanner(menuOptions);
             menuInputScanner.setMessage("Choose what you wanna do.");
             int menuOption = prompt.getUserInput(menuInputScanner);
+
 
             switch (menuOption) {
                 case 1:
@@ -69,6 +86,7 @@ public class Game {
                     break;
                     
                 case 4:
+                    isRunning = false;
                     players.remove(player1);
                     try {
                         player1.closeClientSocket();
@@ -79,7 +97,37 @@ public class Game {
 
             }
         }
+        printStream.println("AAAAAAAA");
+        int counter = 0;
+        for (Player player : players){
+            if (player.isStay() || player.getBusting()){
+             counter++;
+            }
+            continue;
+        }
+        if (counter == players.size()){
+            printStream.println("aaaaaa");
+            dealer.dealerPlay();
+        }
+        if (dealer.getBusting() == true){
+            for (Player player : players){
+                if (player.getBusting() == true){
+                    continue;
+                }
+                printStream.println("You WIN");
+            }
+        }
+        if (dealer.getHand().getHandPoints()< player1.getHand().getHandPoints() && player1.getHand().getHandPoints() <= 21){
+            printStream.println("YOU WIN");
+        }else if (dealer.getHand().getHandPoints() > player1.getHand().getHandPoints() && player1.getHand().getHandPoints() <= 21){
+            printStream.println("YOU LOST");
+        }
 
+
+    }
+
+    public boolean isRunning() {
+        return isRunning;
     }
 
     public void addPlayer(Player player) {

@@ -18,6 +18,16 @@ public class Dealer {
         hand.addCard(cardDeck.dealCard());
     }
 
+    public void dealerPlay(){
+        while (hand.getHandPoints() < 17){
+            hitCard(hand);
+            if (hand.getHandPoints() > 21){
+                setBusting(true);
+            }
+        }
+    }
+
+
     public Hand getHand() {
         return hand;
     }

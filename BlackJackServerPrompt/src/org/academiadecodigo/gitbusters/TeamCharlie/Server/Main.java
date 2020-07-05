@@ -16,9 +16,12 @@ public class Main {
         Dealer dealer = new Dealer(cd);
 
 
+
             Game game = new Game(dealer);
             ChatServer chatServer = new ChatServer(game);
             chatServer.start(port);
+
+
 
 
 

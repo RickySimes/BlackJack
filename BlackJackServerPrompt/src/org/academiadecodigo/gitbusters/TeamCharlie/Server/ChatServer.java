@@ -184,6 +184,19 @@ public class ChatServer {
                     name = prompt.getUserInput(playerName);
 
                     Player player = new Player(name,clientSocket);
+
+                        if (game.isRunning()){
+                            while (game.isRunning()){
+                                try {
+                                    printStream.println("A GAME IS CURRENTLY RUNNING , PLEASE WAIT FOR THE GAME TO END" + "\n");
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                    }
+
+
                     game.addPlayer(player);
                     //Ascii Hand + Welcome
                     printStream.println("\n Welcome "+ name + "! Good luck! \n" + "\n               __             \n         _..-\'\'--\'----_.      \n       ,\'\'.-\'\'| .---/ _`-._   \n     ,\' \\ \\  ;| | ,/ / `-._`-.\n   ,\' ,\',\\ \\( | |// /,-._  / /\n   ;.`. `,\\ \\`| |/ / |   )/ / \n  / /`_`.\\_\\ \\| /_.-.\'-\'\'/ /  \n / /_|_:.`. \\ |;\'`..\')  / /   \n `-._`-._`.`.;`.\\  ,\'  / /    \n     `-._`.`/    ,\'-._/ /     \n       : `-/     \\`-.._/      \n       |  :      ;._ (        \n       :  |      \\  ` \\       \n        \\         \\   |       \n         :        :   ;       \n         |           /        \n         ;         ,\'         \n        /         /           \n       /         /            \n                /             \n");
@@ -232,6 +245,7 @@ public class ChatServer {
             workers.remove(this);
 
         }
+
 
         /**
          * Send a message to the client served by this thread
