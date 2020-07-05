@@ -135,7 +135,7 @@ public class ChatServer {
         final private Socket clientSocket;
         private Prompt prompt;
         private PrintStream printStream;
-        private List<Player> lobby;
+
        /* final private BufferedReader in;
         final private BufferedWriter out;*/
 
@@ -148,7 +148,7 @@ public class ChatServer {
 
             this.name = name;
             this.clientSocket = clientSocket;
-            lobby = new ArrayList<>();
+
             /*in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
             */
@@ -185,16 +185,6 @@ public class ChatServer {
                 name = prompt.getUserInput(playerName);
 
                 Player player = new Player(name, clientSocket);
-
-
-
-               /* if (game.isRunning()) {
-                    while (game.isRunning()) {
-                        game.checkPlayers();
-                        printStream.println("A GAME IS CURRENTLY RUNNING , PLEASE WAIT FOR THE GAME TO END" + "\n");
-                    }
-                    printStream.println("The game has restarted and now you can play!");
-                }*/
 
 
                 game.addPlayer(player);

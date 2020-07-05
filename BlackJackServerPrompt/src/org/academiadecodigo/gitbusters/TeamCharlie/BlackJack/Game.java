@@ -69,6 +69,8 @@ public class Game {
 
     public void playAgain(Prompt prompt, Player player1, PrintStream printStream) {
 
+        player1.setBusting(false);
+
         String[] menuOptions = {"Play again.", "Quit Game."};
         MenuInputScanner menuInputScanner = new MenuInputScanner(menuOptions);
         menuInputScanner.setMessage("Choose what you wanna do.");
@@ -114,7 +116,7 @@ public class Game {
 
 
         while (!player1.isStay() || !player1.getBusting()) {
-
+                checkForceClose(player1);
 
             if (player1.getHand().getHandPoints() > 21) {
                 player1.setBusting(true);
@@ -184,10 +186,10 @@ public class Game {
             isRunning = false;
         }
     }
-
-
-    public boolean isRunning() {
-        return isRunning;
+    public void checkForceClose(Player player){
+        if (player.getClientSocket().isClosed()){
+            players.remove(player);
+        }
     }
 
     public void addPlayer(Player player) {
