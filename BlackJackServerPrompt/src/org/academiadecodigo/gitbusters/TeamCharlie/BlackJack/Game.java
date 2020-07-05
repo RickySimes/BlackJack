@@ -37,6 +37,8 @@ public class Game {
             case 2:
                 player1.setStay(true);
                 dealer.dealerPlay();
+                checkResult(player1, printStream);
+                playAgain(prompt, player1, printStream);
                 break;
 
             case 3:
@@ -66,6 +68,7 @@ public class Game {
     }
 
     public void playAgain(Prompt prompt, Player player1, PrintStream printStream) {
+
         String[] menuOptions = {"Play again.", "Quit Game."};
         MenuInputScanner menuInputScanner = new MenuInputScanner(menuOptions);
         menuInputScanner.setMessage("Choose what you wanna do.");
@@ -77,6 +80,7 @@ public class Game {
                     player.getHand().clear();
                 }
                 dealer.getHand().clear();
+                dealer.hitCard(dealer.getHand());
                 start(prompt, player1, printStream);
                 break;
             case 2:
@@ -102,6 +106,7 @@ public class Game {
 
             dealer.dealCards(player.getHand());
 
+
             printStream.println(player1.getHand());
         }
 
@@ -109,9 +114,6 @@ public class Game {
 
 
         while (!player1.isStay() || !player1.getBusting()) {
-
-            checkPlayers();
-            gameMenu(prompt, player1, printStream);
 
 
             if (player1.getHand().getHandPoints() > 21) {
@@ -133,39 +135,47 @@ public class Game {
                 break;
             }
 
+            checkPlayers();
+            gameMenu(prompt, player1, printStream);
 
-            int counter = 0;
+        }
+        checkResult(player1, printStream);
 
+
+        playAgain(prompt, player1, printStream);
+
+
+    }
+    public void checkResult( Player player1,PrintStream printStream ){
+        int counter = 0;
+
+        for (Player player : players) {
+            if (player.isStay() || player.getBusting()) {
+                counter++;
+
+            }
+        }
+
+        if (counter == players.size()) {
+            dealer.dealerPlay();
+        }
+
+        if (dealer.getBusting()) {
             for (Player player : players) {
-                if (player.isStay() || player.getBusting()) {
-                    counter++;
-
+                if (player.getBusting()) {
+                    continue;
                 }
+                printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "Dealer Busted, YOU WIN! \n");
             }
 
-            if (counter == players.size()) {
-                dealer.dealerPlay();
-            }
+        } else if (dealer.getHand().getHandPoints() < player1.getHand().getHandPoints() && !player1.getBusting()) {
+            printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "YOU WIN \n");
 
-            if (dealer.getBusting()) {
-                for (Player player : players) {
-                    if (player.getBusting()) {
-                        continue;
-                    }
-                    printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "Dealer Busted, YOU WIN! \n");
-                }
+        } else if (dealer.getHand().getHandPoints() > player1.getHand().getHandPoints() && !player1.getBusting()) {
+            printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "YOU LOST \n");
 
-            } else if (dealer.getHand().getHandPoints() < player1.getHand().getHandPoints() && !player1.getBusting()) {
-                printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "YOU WIN \n");
-
-            } else if (dealer.getHand().getHandPoints() > player1.getHand().getHandPoints() && !player1.getBusting()) {
-                printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "YOU LOST \n");
-
-            } else if (dealer.getHand().getHandPoints() == player1.getHand().getHandPoints()) {
-                printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "IT'S A TIE \n");
-            }
-
-            playAgain(prompt, player1, printStream);
+        } else if (dealer.getHand().getHandPoints() == player1.getHand().getHandPoints()) {
+            printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "IT'S A TIE \n");
         }
     }
 
