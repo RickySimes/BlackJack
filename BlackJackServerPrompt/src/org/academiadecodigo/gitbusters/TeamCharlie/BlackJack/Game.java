@@ -118,19 +118,19 @@ public class Game {
 
             if (player1.getHand().getHandPoints() > 21) {
                 player1.setBusting(true);
-                printStream.println("explosão em ascii");
+                printStream.println(AsciiMessage.EXPLOSION);
                 playAgain(prompt, player1, printStream);
                 break;
             }
 
             if (player1.getHand().getHandPoints() == 21 && player1.getHand().getStartHand().size() == 2) {
-                printStream.println("YOU GOT BLACK JACK");
+                printStream.println(AsciiMessage.BLACKJACK);
                 player1.setStay(true);
                 break;
             }
 
             if (player1.getHand().getHandPoints() == 21) {
-                printStream.println("YOU GOT MAX POINTS");
+                printStream.println(AsciiMessage.MAX_POINTS);
                 player1.setStay(true);
                 break;
             }
@@ -169,13 +169,13 @@ public class Game {
             }
 
         } else if (dealer.getHand().getHandPoints() < player1.getHand().getHandPoints() && !player1.getBusting()) {
-            printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "YOU WIN \n");
+            printStream.println(AsciiMessage.YOU_WIN + "Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand());
 
         } else if (dealer.getHand().getHandPoints() > player1.getHand().getHandPoints() && !player1.getBusting()) {
-            printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "YOU LOST \n");
+            printStream.println(AsciiMessage.YOU_LOSE + "Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand());
 
         } else if (dealer.getHand().getHandPoints() == player1.getHand().getHandPoints()) {
-            printStream.println("Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand() + "IT'S A TIE \n");
+            printStream.println(AsciiMessage.TIE + "Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand());
         }
     }
 

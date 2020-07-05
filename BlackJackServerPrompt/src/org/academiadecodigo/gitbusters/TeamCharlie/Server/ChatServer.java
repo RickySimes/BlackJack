@@ -174,7 +174,8 @@ public class ChatServer {
 
 
             IntegerInputScanner scanner = new IntegerInputScanner();
-            scanner.setMessage("1 - Play " + "\n" + "2 - Exit" + "\n");
+            printStream.println(AsciiMessage.WELCOME_CASINO);
+            scanner.setMessage( "1 - Play " + "\n" + "2 - Exit" + "\n");
             int menuOption = prompt.getUserInput(scanner);
 
             if (menuOption == 1) {
