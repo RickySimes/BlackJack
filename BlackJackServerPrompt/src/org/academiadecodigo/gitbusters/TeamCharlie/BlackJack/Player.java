@@ -45,6 +45,8 @@ public class Player {
 
     public void setStay(boolean stay) {
         this.stay = stay;
+        //added stay to hand
+      //  this.hand.setStay(stay);
     }
 
     public void closeClientSocket() throws IOException {

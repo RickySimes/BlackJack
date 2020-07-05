@@ -2,7 +2,7 @@ package org.academiadecodigo.gitbusters.TeamCharlie.BlackJack;
 
 public enum CardValue {
 
-    A(11),
+    A(1),
     K(10),
     Q(10),
     J(10),

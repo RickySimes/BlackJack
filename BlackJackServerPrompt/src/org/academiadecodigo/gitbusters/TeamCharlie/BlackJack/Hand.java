@@ -9,14 +9,45 @@ public class Hand {
 
     private ArrayList<Card> hand;
 
+    //added Stay property
+    private boolean stay;
+    //
+    private boolean haveAce = false;
+    private String aceMsg = "";
+
     public Hand() {
         hand = new ArrayList<>();
     }
 
     public void addCard(Card c) {
-        hand.add(c);
+        //if(!stay) {
+            hand.add(c);
+        //}
     }
 
+    public int getBlackjackValue() {
+        int numCards = hand.size();
+        int val = 0;
+
+        for(int i = 0; i < numCards; i++) {
+            Card card = hand.get(i);
+            int cardVal = card.getPoints();
+
+            if(cardVal == 1) {
+                haveAce = true;
+                aceMsg = "Ace is 1";
+            }
+            val = val + cardVal;
+
+        }
+
+        if(haveAce && (val + 10 <= 21)) {
+            val = val + 10;
+            aceMsg = "Ace is 11";
+        }
+
+        return val;
+    }
 
     public int getHandPoints() {
 
@@ -29,10 +60,10 @@ public class Hand {
 
         return result;
     }
+
     public ArrayList<Card> getStartHand(){
         return hand;
     }
-
 
     public String getHand() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -47,9 +78,13 @@ public class Hand {
         hand.clear();
     }
 
+    public void setStay(boolean stay) {
+        this.stay = stay;
+    }
+
     @Override
     public String toString() {
         //Add Total Points
-        return getHand() + "   Total :" + getHandPoints();
+        return getHand() + "   Total :" + getBlackjackValue() + " |" + aceMsg;
     }
 }
