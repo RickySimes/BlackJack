@@ -81,5 +81,7 @@ public class AsciiMessage {
             "     |  |\n" +
             "     |  |\n" +
             "     \\  /   IT'S A TIE\n" +
-            "      /";
+            "      /\n" +
+            "\n"
+            ;
 }

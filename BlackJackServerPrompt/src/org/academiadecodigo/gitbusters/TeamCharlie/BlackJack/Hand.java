@@ -79,6 +79,10 @@ public class Hand {
         this.stay = stay;
     }
 
+    public Card getFirstCard(){
+        return hand.get(0);
+    }
+
     @Override
     public String toString() {
         //Add Total Points

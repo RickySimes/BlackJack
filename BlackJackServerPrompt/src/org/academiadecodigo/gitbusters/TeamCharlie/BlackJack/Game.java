@@ -49,7 +49,7 @@ public class Game {
 
             case 3:
                 //Show dealer Hand
-                printStream.println("DEALER ---> " + dealer.getHand() + "\n");
+                printStream.println("DEALER ---> " + dealer.getHand().getFirstCard() + "   Total  : " +dealer.getHand().getFirstCard().getPoints()+ "\n");
                 for (Player players : players) {
                     if (players == player1) {
                         //Show my Hand
@@ -208,10 +208,10 @@ public class Game {
         }
     }
     public void checkForceClose(){
-        System.out.println("banana");
+
         for (Player player1 : players){
             if (!player1.getClientSocket().isConnected()){
-                System.out.println("AAAAAAA");
+
                 player1.getHand().clear();
                 players.remove(player1);
             }
