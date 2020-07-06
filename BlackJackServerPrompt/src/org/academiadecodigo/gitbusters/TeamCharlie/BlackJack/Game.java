@@ -69,7 +69,7 @@ public class Game {
                 }
                 break;
             default:
-               // player1.getHand().clear();
+                player1.getHand().clear();
                 players.remove(player1);
                 try {
                     player1.closeClientSocket();
@@ -136,18 +136,24 @@ public class Game {
             if (player1.getHand().getHandPoints() > 21) {
                 player1.setBusting(true);
                 printStream.println(AsciiMessage.EXPLOSION);
+                player1.getHand().clear();
+                players.remove(player1);
                 playAgain(prompt, player1, printStream);
                 break;
             }
 
             if (player1.getHand().getHandPoints() == 21 && player1.getHand().getStartHand().size() == 2) {
                 printStream.println(AsciiMessage.BLACKJACK);
+                player1.getHand().clear();
+                players.remove(player1);
                 player1.setStay(true);
                 break;
             }
 
             if (player1.getHand().getHandPoints() == 21) {
                 printStream.println(AsciiMessage.MAX_POINTS);
+                player1.getHand().clear();
+                players.remove(player1);
                 player1.setStay(true);
                 break;
             }
