@@ -149,9 +149,6 @@ public class ChatServer {
             this.name = name;
             this.clientSocket = clientSocket;
 
-            /*in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-            */
             this.printStream = new PrintStream(clientSocket.getOutputStream());
             this.prompt = new Prompt(clientSocket.getInputStream(), printStream);
 

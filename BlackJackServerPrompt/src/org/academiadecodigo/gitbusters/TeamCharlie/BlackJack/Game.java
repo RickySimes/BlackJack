@@ -122,7 +122,6 @@ public class Game {
 
 
         while (!player1.isStay() || !player1.getBusting()) {
-                checkForceClose();
 
             if (player1.getHand().getHandPoints() > 21) {
                 player1.setBusting(true);
@@ -193,10 +192,8 @@ public class Game {
         }
     }
     public void checkForceClose(){
-        System.out.println("banana");
         for (Player player1 : players){
             if (!player1.getClientSocket().isConnected()){
-                System.out.println("AAAAAAA");
                 player1.getHand().clear();
                 players.remove(player1);
             }
