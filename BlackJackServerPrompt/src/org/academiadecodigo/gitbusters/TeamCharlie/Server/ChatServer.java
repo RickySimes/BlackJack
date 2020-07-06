@@ -135,6 +135,7 @@ public class ChatServer {
         final private Socket clientSocket;
         private Prompt prompt;
         private PrintStream printStream;
+      //  private ArrayList<Socket> playersSocketsArr = new ArrayList<>();
 
        /* final private BufferedReader in;
         final private BufferedWriter out;*/
@@ -148,6 +149,11 @@ public class ChatServer {
 
             this.name = name;
             this.clientSocket = clientSocket;
+         //   playersSocketsArr.add(clientSocket);
+            System.out.println(clientSocket.getLocalPort());
+            //for(Socket connections : playersSocketsArr){
+              //  if(clientSocket.)
+            //}
 
             this.printStream = new PrintStream(clientSocket.getOutputStream());
             this.prompt = new Prompt(clientSocket.getInputStream(), printStream);

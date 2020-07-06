@@ -49,7 +49,7 @@ public class Game {
 
             case 3:
                 //Show dealer Hand
-                printStream.println("DEALER ---> " + dealer.getHand() + "\n");
+                printStream.println("DEALER ---> " + dealer.getHand().getFirstCard() + "   Total  : " +dealer.getHand().getFirstCard().getPoints()+ "\n");
                 for (Player players : players) {
                     if (players == player1) {
                         //Show my Hand
@@ -61,6 +61,15 @@ public class Game {
                 break;
 
             case 4:
+                players.remove(player1);
+                try {
+                    player1.closeClientSocket();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                player1.getHand().clear();
                 players.remove(player1);
                 try {
                     player1.closeClientSocket();
@@ -126,18 +135,24 @@ public class Game {
             if (player1.getHand().getHandPoints() > 21) {
                 player1.setBusting(true);
                 printStream.println(AsciiMessage.EXPLOSION);
+                player1.getHand().clear();
+                players.remove(player1);
                 playAgain(prompt, player1, printStream);
                 break;
             }
 
             if (player1.getHand().getHandPoints() == 21 && player1.getHand().getStartHand().size() == 2) {
                 printStream.println(AsciiMessage.BLACKJACK);
+                player1.getHand().clear();
+                players.remove(player1);
                 player1.setStay(true);
                 break;
             }
 
             if (player1.getHand().getHandPoints() == 21) {
                 printStream.println(AsciiMessage.MAX_POINTS);
+                player1.getHand().clear();
+                players.remove(player1);
                 player1.setStay(true);
                 break;
             }
@@ -192,6 +207,8 @@ public class Game {
         }
     }
     public void checkForceClose(){
+
+
         for (Player player1 : players){
             if (!player1.getClientSocket().isConnected()){
                 player1.getHand().clear();
