@@ -12,6 +12,7 @@ public class Player {
     private String name;
     private Socket clientSocket;
     private boolean stay;
+    private boolean asplayed;
 
     public Player(String name,Socket clientSocket){
         this.name = name;
@@ -45,12 +46,18 @@ public class Player {
 
     public void setStay(boolean stay) {
         this.stay = stay;
-        //added stay to hand
-      //  this.hand.setStay(stay);
     }
 
     public void closeClientSocket() throws IOException {
         clientSocket.close();
+    }
+
+    public void setAsplayed(boolean asplayed) {
+        this.asplayed = asplayed;
+    }
+
+    public boolean getPlayed(){
+        return asplayed;
     }
 
     @Override

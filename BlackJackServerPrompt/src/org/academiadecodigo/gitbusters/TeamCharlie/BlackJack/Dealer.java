@@ -5,6 +5,8 @@ public class Dealer {
     private CardDeck cardDeck;
     private boolean busting;
     private Hand hand;
+    private boolean asplayed;
+
 
     public Dealer(CardDeck cardDeck) {
         this.hand = new Hand();
@@ -30,6 +32,17 @@ public class Dealer {
 
     public Hand getHand() {
         return hand;
+    }
+
+    public void setAsplayed(boolean asplayed) {
+        this.asplayed = asplayed;
+    }
+
+    public boolean getPlayed(){
+        return asplayed;
+    }
+    public void clear() {
+        hand.clear();
     }
 
     public void hitCard(Hand hand) {

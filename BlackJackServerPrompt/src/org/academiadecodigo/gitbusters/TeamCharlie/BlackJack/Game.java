@@ -42,6 +42,7 @@ public class Game {
 
             case 2:
                 player1.setStay(true);
+                player1.setAsplayed(true);
                 dealer.dealerPlay();
                 checkResult(player1, printStream);
                 playAgain(prompt, player1, printStream);
@@ -85,6 +86,26 @@ public class Game {
     public void playAgain(Prompt prompt, Player player1, PrintStream printStream) {
 
         player1.setBusting(false);
+        player1.setStay(false);
+        player1.setAsplayed(false);
+        for (Player player : players) {
+
+            if (player.getHand().getStartHand().size() >= 2) {
+                continue;
+            }
+
+            dealer.dealCards(player.getHand());
+
+
+            printStream.println(player1.getHand());
+        }
+        for (Player player : players) {
+          if (player.getPlayed()){
+              player.getHand().clear();
+          }
+
+        }
+
 
         String[] menuOptions = {"Play again.", "Quit Game."};
         MenuInputScanner menuInputScanner = new MenuInputScanner(menuOptions);
@@ -99,7 +120,23 @@ public class Game {
                 dealer.getHand().clear();
                 dealer.hitCard(dealer.getHand());
                 start(prompt, player1, printStream);
+
+                for (Player player : players) {
+
+                    if (player.getHand().getStartHand().size() >= 2) {
+                        continue;
+                    }
+
+                    if (player.getHand().getStartHand().size() == 0) {
+                        dealer.dealCards(player.getHand());
+                    }
+
+                    printStream.println(player1.getHand());
+                }
+
+
                 break;
+
             case 2:
                 try {
                     player1.closeClientSocket();
@@ -138,6 +175,8 @@ public class Game {
                 printStream.println(AsciiMessage.EXPLOSION);
                 player1.getHand().clear();
                 players.remove(player1);
+                player1.setAsplayed(true);
+
                 playAgain(prompt, player1, printStream);
                 break;
             }
@@ -147,6 +186,7 @@ public class Game {
                 player1.getHand().clear();
                 players.remove(player1);
                 player1.setStay(true);
+                player1.setAsplayed(true);
                 break;
             }
 
@@ -155,6 +195,8 @@ public class Game {
                 player1.getHand().clear();
                 players.remove(player1);
                 player1.setStay(true);
+                player1.setAsplayed(true);
+
                 break;
             }
 
@@ -181,6 +223,7 @@ public class Game {
 
         if (counter == players.size()) {
             dealer.dealerPlay();
+            dealer.setAsplayed(true);
         }
 
         if (dealer.getBusting()) {
@@ -189,17 +232,36 @@ public class Game {
                     continue;
                 }
                 printStream.println(AsciiMessage.YOU_WIN + "Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand());
+                player1.setBusting(false);
+                player1.setStay(false);
+                player1.setAsplayed(true);
+
             }
 
         } else if (dealer.getHand().getHandPoints() < player1.getHand().getHandPoints() && !player1.getBusting()) {
             printStream.println(AsciiMessage.YOU_WIN + "Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand());
+            player1.setBusting(false);
+            player1.setStay(false);
+            player1.setAsplayed(true);
 
         } else if (dealer.getHand().getHandPoints() > player1.getHand().getHandPoints() && !player1.getBusting()) {
             printStream.println(AsciiMessage.YOU_LOSE + "Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand());
+            player1.setBusting(false);
+            player1.setStay(false);
+            player1.setAsplayed(true);
 
         } else if (dealer.getHand().getHandPoints() == player1.getHand().getHandPoints()) {
             printStream.println(AsciiMessage.TIE + "Dealer's Hand: \n" + dealer.getHand() + "\n Your Hand: \n" + player1.getHand());
+            player1.setBusting(false);
+            player1.setStay(false);
+            player1.setAsplayed(true);
         }
+        player1.setBusting(false);
+        player1.setStay(false);
+        player1.setAsplayed(true);
+        dealer.getHand().clear();
+        CardDeck cardDeck = new CardDeck();
+        dealer = new Dealer(cardDeck);
     }
 
     public void checkPlayers(){
