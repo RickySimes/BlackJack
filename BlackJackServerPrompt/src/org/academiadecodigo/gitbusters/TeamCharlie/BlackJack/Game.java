@@ -24,7 +24,13 @@ public class Game {
         String[] menuOptions = {"Hit.", "Stay.", "View all players hands.", "Quit Game."};
         MenuInputScanner menuInputScanner = new MenuInputScanner(menuOptions);
         menuInputScanner.setMessage("Choose what you wanna do.");
-        int menuOption = prompt.getUserInput(menuInputScanner);
+
+        int menuOption = 0;
+        try {
+            menuOption = prompt.getUserInput(menuInputScanner);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         switch (menuOption) {
             case 1:
@@ -116,7 +122,7 @@ public class Game {
 
 
         while (!player1.isStay() || !player1.getBusting()) {
-                checkForceClose(player1);
+                checkForceClose();
 
             if (player1.getHand().getHandPoints() > 21) {
                 player1.setBusting(true);
@@ -186,10 +192,16 @@ public class Game {
             isRunning = false;
         }
     }
-    public void checkForceClose(Player player){
-        if (player.getClientSocket().isClosed()){
-            players.remove(player);
+    public void checkForceClose(){
+        System.out.println("banana");
+        for (Player player1 : players){
+            if (!player1.getClientSocket().isConnected()){
+                System.out.println("AAAAAAA");
+                player1.getHand().clear();
+                players.remove(player1);
+            }
         }
+
     }
 
     public void addPlayer(Player player) {
