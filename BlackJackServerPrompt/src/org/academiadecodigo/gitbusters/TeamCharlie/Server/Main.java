@@ -12,11 +12,11 @@ public class Main {
         CardDeck cd = new CardDeck();
         Dealer dealer = new Dealer(cd);
 
-
-        Game game = new Game(dealer);
-        ChatServer chatServer = new ChatServer(game);
-        chatServer.start(port);
-
+        //while(true) {
+            Game game = new Game(dealer);
+            ChatServer chatServer = new ChatServer(game);
+            chatServer.start(port);
+        //}
 
     }
 

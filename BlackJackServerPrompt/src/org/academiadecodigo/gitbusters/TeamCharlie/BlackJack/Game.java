@@ -68,6 +68,15 @@ public class Game {
                     e.printStackTrace();
                 }
                 break;
+            default:
+               // player1.getHand().clear();
+                players.remove(player1);
+                try {
+                    player1.closeClientSocket();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
 
         }
 
