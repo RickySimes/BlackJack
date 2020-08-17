@@ -98,6 +98,8 @@ public class Game {
                 }
                 dealer.getHand().clear();
                 dealer.hitCard(dealer.getHand());
+                dealer.dealCards(player1.getHand());
+                printStream.println(player1.getHand());
                 start(prompt, player1, printStream);
                 break;
             case 2:
@@ -170,6 +172,7 @@ public class Game {
     }
     public void checkResult( Player player1,PrintStream printStream ){
         int counter = 0;
+        player1.setStay(false);
 
         for (Player player : players) {
             if (player.isStay() || player.getBusting()) {
